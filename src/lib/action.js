@@ -5,10 +5,6 @@ import { Post, User } from "./models";
 import { signIn, signOut } from "../lib/auth";
 import bcrypt from "bcryptjs";
 
-/* server action
-클라이언트에서 직접 서버 사이드 로직을 호출할 수 있어, API 경로를 거치지 않고도 서버와 통신.
-*/
-
 export const addPost = async (prevState, formData) => {
     const { title, desc, slug, userId } = Object.fromEntries(formData);
     try {
@@ -23,13 +19,11 @@ export const addPost = async (prevState, formData) => {
     }
 };
 
-// server action
 export const deletePost = async (formData) => {
     const { id } = Object.fromEntries(formData);
 
     try {
         connectToDb();
-
         await Post.findByIdAndDelete(id);
         console.log("deleted from db");
         revalidatePath("/blog");
@@ -66,7 +60,6 @@ export const deleteUser = async (formData) => {
 
     try {
         connectToDb();
-
         await Post.deleteMany({ userId: id });
         await User.findByIdAndDelete(id);
         console.log("deleted from db");

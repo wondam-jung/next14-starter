@@ -1,5 +1,8 @@
 
-## Why I Choose to learn Next.js?
+## Why Next.js?
+> next.js use SSR + user interaction(e.g. hooks -> "use client").
+
+> suitable for mini full-stack web application.
 1. SSR
 - server response as html, javascript for *interaction*
     -  *user is waiting* for interactivity
@@ -22,11 +25,26 @@
 - cons
     - may affect SEO, slower initial load, dependency on client resources (*if you have a huge app all devices might have some problems*)
 
-3. why i choose to learn Next.js? 
-- next.js use SSR + user interaction(e.g. hooks -> "use client").
-- suitable for mini full-stack web application. 
+## Things I didn't know about while learning Next.js
 
-## Things I didn't know about while learning Next.js compared to React.js
+### Folder based (app) Routing
+* basic usage
+```javascript
+// localhost:8000/admin
+app > admin > page.jsx
+```
+* slug
+```javascript
+// localhost:3000/blog/hello-world
+app > blog > [slug] > page.jsx
+```
+* route grouping
+```javascript
+// localhost:3000/login, localhost:3000/register
+src > app > (auth) > login > page.jsx 
+src > app > (auth) > register > page.jsx
+```
+### 
 ### Hydration Issues
 > *Hydration* refers to the process where the *client reconnects event handlers and state* after rendering, and in Next.js (SSR), Hydration issues can arise when the HTML sent from the server to the client results in differences during the reconnection of event handlers and state. 
 
@@ -40,7 +58,7 @@ To resolve this, there are three main approaches.
 2. Not using "use client"
     - use dynamic import with options SSR to false
 
-```
+```javascript
 "use client";
 /* 
     even if use "use client", the initial render will be on the server side.
@@ -97,8 +115,16 @@ const ContactPage = () => {
 
 export default ContactPage;
 ```
-## Client Side Navigation
+## Navigation
+### Server Side Navigation (default)
+
+```javascript
+const BlogPage = ({params, searchParams}) => {
+    // component props
+}
 ```
+### Client Side Navigation
+```javascript
 "use client"
 
 const router = useRouter();
@@ -114,10 +140,9 @@ const handleClick = () => {
 }
 ```
 
-## Server Side Navigation (default)
+## Server actions vs API
+> A server action allows the client to directly call server-side logic, enabling communication with the server without going through an API route.
 
-```
-const BlogPage = ({params, searchParams}) => {
-    // component props
-}
-```
+> In this project, *C,U,D* is implemented using server action while *R* is implemented using API.
+
+
